@@ -54,7 +54,6 @@
             <label>Middle Name:</label> <input type="text" name="middle_name">
             <label>Last Name:</label> <input type="text" name="last_name">
             <label>DOB:</label> <input type="date" id="dob" name="dob">
-            <input type="hidden" id="formatted_dob" name="formatted_dob">
             <!-- [Rest of the form fields remain the same] -->
             
             <button type="submit">Submit</button>
@@ -62,24 +61,26 @@
     </div>
 
     <script>
-        document.getElementById('applicationForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
+        document.getElementById('applicationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            // Get the date value
-            let dobField = document.getElementById("dob");
-            let formattedDobField = document.getElementById("formatted_dob");
+            // Get the date input
+            const dobInput = document.getElementById('dob');
             
-            if (dobField.value) {
-                let date = new Date(dobField.value);
-                let month = (date.getMonth() + 1).toString().padStart(2, '0');
-                let day = date.getDate().toString().padStart(2, '0');
-                let year = date.getFullYear();
+            if (dobInput.value) {
+                // Parse the date
+                const date = new Date(dobInput.value);
                 
-                // Set the formatted date in the hidden field
-                formattedDobField.value = `${month}/${day}/${year}`;
+                // Format as MM/DD/YYYY
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                const year = date.getFullYear();
                 
-                // Set the original date field to the formatted value
-                dobField.value = formattedDobField.value;
+                // Set the formatted value back to the input
+                dobInput.value = `${month}/${day}/${year}`;
+                
+                // For debugging
+                console.log('Formatted date:', dobInput.value);
             }
             
             // Submit the form
