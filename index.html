@@ -45,13 +45,14 @@
 <body>
     <div class="container">
         <h2>EZ Application Information</h2>
-        <form action="https://jarndt.app.n8n.cloud/webhook-test/39f349d6-fef8-4460-879f-5932e13731a4" method="POST">
+        <form action="https://jarndt.app.n8n.cloud/webhook-test/39f349d6-fef8-4460-879f-5932e13731a4" method="POST" onsubmit="formatDOB(event)">
             
             <h3>Insured Information</h3>
             <label>First Name:</label> <input type="text" name="first_name">
             <label>Middle Name:</label> <input type="text" name="middle_name">
             <label>Last Name:</label> <input type="text" name="last_name">
-            <label>DOB:</label> <input type="date" name="dob">
+            <label>DOB:</label> <input type="date" id="dob" name="dob">
+            <span id="formatted-dob"></span>
             <label>Gender:</label>
             <select name="gender">
                 <option value="male">Male</option>
@@ -104,5 +105,17 @@
             <button type="submit">Submit</button>
         </form>
     </div>
+
+    <script>
+    function formatDOB(event) {
+        let dobField = document.getElementById("dob");
+        let dateParts = dobField.value.split("-");
+        
+        if (dateParts.length === 3) {
+            let formattedDate = `${dateParts[1]}/${dateParts[2]}/${dateParts[0]}`;
+            dobField.value = formattedDate; // Override form value before submission
+        }
+    }
+    </script>
 </body>
 </html>
