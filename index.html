@@ -1,350 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EZ Application Information</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 20px;
-            padding-bottom: 40px;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-        .section {
-            margin-bottom: 30px;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 5px;
-        }
-        h2 {
-            text-align: center;
-            color: #2c3e50;
-        }
-        h3 {
-            color: #34495e;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 5px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
-        input[type="text"],
-        input[type="number"],
-        input[type="email"],
-        input[type="tel"],
-        input[type="date"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .radio-group {
-            margin: 10px 0;
-        }
-        .radio-group label {
-            font-weight: normal;
-            margin-right: 20px;
-        }
-        button {
-            background-color: #3498db;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #2980b9;
-        }
-        .beneficiary-entry {
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2>EZ Application Information</h2>
-        <form id="applicationForm" action="https://jarndt.app.n8n.cloud/webhook-test/39f349d6-fef8-4460-879f-5932e13731a4" method="POST">
-            
-            <div class="section">
-                <h3>Insured Information</h3>
-                <div class="form-group">
-                    <label>First Name:</label>
-                    <input type="text" name="first_name" required>
-                </div>
-                <div class="form-group">
-                    <label>Middle Name:</label>
-                    <input type="text" name="middle_name">
-                </div>
-                <div class="form-group">
-                    <label>Last Name:</label>
-                    <input type="text" name="last_name" required>
-                </div>
-                <div class="form-group">
-                    <label>DOB:</label>
-                    <input type="date" name="dob" class="date-input" required>
-                </div>
-                <div class="form-group">
-                    <label>Gender:</label>
-                    <div class="radio-group">
-                        <input type="radio" name="gender" value="male" id="male" required>
-                        <label for="male">Male</label>
-                        <input type="radio" name="gender" value="female" id="female">
-                        <label for="female">Female</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>State/Country Born:</label>
-                    <input type="text" name="birth_place">
-                </div>
-                <div class="form-group">
-                    <label>SSN:</label>
-                    <input type="text" name="ssn" pattern="\d{3}-?\d{2}-?\d{4}" placeholder="123-45-6789">
-                </div>
-                <div class="form-group">
-                    <label>Phone Number:</label>
-                    <input type="tel" name="phone" pattern="\(\d{3}\) \d{3}-\d{4}" placeholder="(123) 456-7890">
-                </div>
-                <div class="form-group">
-                    <label>Email:</label>
-                    <input type="email" name="email">
-                </div>
-                <div class="form-group">
-                    <label>Driver's License #:</label>
-                    <input type="text" name="dl_number">
-                </div>
-                <div class="form-group">
-                    <label>Driver's License State:</label>
-                    <input type="text" name="dl_state">
-                </div>
-                <div class="form-group">
-                    <label>Use Tobacco Products:</label>
-                    <div class="radio-group">
-                        <input type="radio" name="tobacco" value="no" id="tobacco_no">
-                        <label for="tobacco_no">No</label>
-                        <input type="radio" name="tobacco" value="yes" id="tobacco_yes">
-                        <label for="tobacco_yes">Yes</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Tobacco Frequency:</label>
-                    <input type="text" name="tobacco_frequency">
-                </div>
-                <div class="form-group">
-                    <label>Tobacco Products:</label>
-                    <input type="text" name="tobacco_products">
-                </div>
-            </div>
+// Function to format date as MM/DD/YYYY
+function formatDate(dateInput) {
+    const date = new Date(dateInput.value);
+    if (!isNaN(date.getTime())) {
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${month}/${day}/${year}`;
+    }
+    return '';
+}
 
-            <div class="section">
-                <h3>Employment & Income Information</h3>
-                <div class="form-group">
-                    <label>Currently Employed:</label>
-                    <div class="radio-group">
-                        <input type="radio" name="employed" value="yes" id="employed_yes">
-                        <label for="employed_yes">Yes</label>
-                        <input type="radio" name="employed" value="no" id="employed_no">
-                        <label for="employed_no">No</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Employer Name:</label>
-                    <input type="text" name="employer_name">
-                </div>
-                <div class="form-group">
-                    <label>Occupation:</label>
-                    <input type="text" name="occupation">
-                </div>
-                <div class="form-group">
-                    <label>Income:</label>
-                    <input type="number" name="income" placeholder="$">
-                </div>
-                <div class="form-group">
-                    <label>Employer's Address:</label>
-                    <input type="text" name="employer_address">
-                </div>
-                <div class="form-group">
-                    <label>Source of Income (if unemployed):</label>
-                    <select name="income_source">
-                        <option value="">Select source...</option>
-                        <option value="spouse">Spouse</option>
-                        <option value="severance">Severance</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Retired:</label>
-                    <div class="radio-group">
-                        <input type="radio" name="retired" value="yes" id="retired_yes">
-                        <label for="retired_yes">Yes</label>
-                        <input type="radio" name="retired" value="no" id="retired_no">
-                        <label for="retired_no">No</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Retirement Income:</label>
-                    <input type="number" name="retirement_income" placeholder="$">
-                </div>
-                <div class="form-group">
-                    <label>Net Worth:</label>
-                    <input type="number" name="net_worth" placeholder="$">
-                </div>
-            </div>
-
-            <div class="section">
-                <h3>Policy & Doctor Information</h3>
-                <div class="form-group">
-                    <label>Purpose of Insurance:</label>
-                    <input type="text" name="insurance_purpose">
-                </div>
-                <div class="form-group">
-                    <label>Replacing Current Policy?</label>
-                    <div class="radio-group">
-                        <input type="radio" name="replacing_policy" value="no" id="replacing_no">
-                        <label for="replacing_no">No</label>
-                        <input type="radio" name="replacing_policy" value="yes" id="replacing_yes">
-                        <label for="replacing_yes">Yes</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Reason for Replacement:</label>
-                    <textarea name="replacement_reason"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Primary Doctor's Name:</label>
-                    <input type="text" name="doctor_name">
-                </div>
-                <div class="form-group">
-                    <label>Date of Last Visit:</label>
-                    <input type="date" name="last_visit_date" class="date-input">
-                </div>
-                <div class="form-group">
-                    <label>Primary Doctor's Address:</label>
-                    <input type="text" name="doctor_address">
-                </div>
-            </div>
-
-            <div class="section">
-                <h3>Beneficiary Information</h3>
-                <div id="beneficiaries">
-                    <div class="beneficiary-entry">
-                        <div class="form-group">
-                            <label>Name:</label>
-                            <input type="text" name="beneficiary_name[]">
-                        </div>
-                        <div class="form-group">
-                            <label>Relationship:</label>
-                            <input type="text" name="beneficiary_relationship[]">
-                        </div>
-                        <div class="form-group">
-                            <label>DOB:</label>
-                            <input type="date" name="beneficiary_dob[]" class="date-input">
-                        </div>
-                        <div class="form-group">
-                            <label>Type:</label>
-                            <select name="beneficiary_type[]">
-                                <option value="primary">Primary</option>
-                                <option value="contingent">Contingent</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section">
-                <h3>Financial Planner Information</h3>
-                <div class="form-group">
-                    <label>Financial Planner:</label>
-                    <div class="radio-group">
-                        <input type="radio" name="has_planner" value="no" id="planner_no">
-                        <label for="planner_no">No</label>
-                        <input type="radio" name="has_planner" value="yes" id="planner_yes">
-                        <label for="planner_yes">Yes</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Name of Firm:</label>
-                    <input type="text" name="firm_name">
-                </div>
-                <div class="form-group">
-                    <label>Approximate Time Working with Firm:</label>
-                    <input type="text" name="time_with_firm">
-                </div>
-            </div>
-
-            <button type="submit">Submit Application</button>
-        </form>
-    </div>
-
-    <script>
-        // Function to format date as MM/DD/YYYY
-        function formatDate(dateInput) {
-            const date = new Date(dateInput.value);
-            if (!isNaN(date.getTime())) {
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const day = String(date.getDate()).padStart(2, '0');
-                const year = date.getFullYear();
-                return `${month}/${day}/${year}`;
-            }
-            return '';
+// Handle form submission
+document.getElementById('applicationForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Create FormData object
+    const formData = new FormData(this);
+    
+    // Format all date inputs and update FormData
+    const dateInputs = document.querySelectorAll('.date-input');
+    dateInputs.forEach(input => {
+        if (input.value) {
+            const formattedDate = formatDate(input);
+            formData.set(input.name, formattedDate);
         }
-
-        // Handle form submission
-        document.getElementById('applicationForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Format all date inputs
-            const dateInputs = document.querySelectorAll('.date-input');
-            dateInputs.forEach(input => {
-                if (input.value) {
-                    input.value = formatDate(input);
-                }
-            });
-            
-            // Submit the form
-            this.submit();
-        });
-
-        // Format phone number as user types
-        const phoneInput = document.querySelector('input[name="phone"]');
-        if (phoneInput) {
-            phoneInput.addEventListener('input', function(e) {
-                let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
-                e.target.value = !x[2] ? x[1] : `(${x[1]}) ${x[2]}${x[3] ? '-' + x[3] : ''}`;
-            });
+    });
+    
+    // Convert FormData to URL-encoded string
+    const data = new URLSearchParams(formData);
+    
+    // Submit the form using fetch
+    fetch(this.action, {
+        method: 'POST',
+        body: data,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
         }
+    })
+    .then(response => response.json())
+    .then(data => console.log('Success:', data))
+    .catch(error => console.error('Error:', error));
+});
 
-        // Format SSN as user types
-        const ssnInput = document.querySelector('input[name="ssn"]');
-        if (ssnInput) {
-            ssnInput.addEventListener('input', function(e) {
-                let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,2})(\d{0,4})/);
-                e.target.value = !x[2] ? x[1] : `${x[1]}-${x[2]}${x[3] ? '-' + x[3] : ''}`;
-            });
-        }
-    </script>
-</body>
-</html>
+// Format phone number as user types
+const phoneInput = document.querySelector('input[name="phone"]');
+if (phoneInput) {
+    phoneInput.addEventListener('input', function(e) {
+        let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+        e.target.value = !x[2] ? x[1] : `(${x[1]}) ${x[2]}${x[3] ? '-' + x[3] : ''}`;
+    });
+}
+
+// Format SSN as user types
+const ssnInput = document.querySelector('input[name="ssn"]');
+if (ssnInput) {
+    ssnInput.addEventListener('input', function(e) {
+        let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,2})(\d{0,4})/);
+        e.target.value = !x[2] ? x[1] : `${x[1]}-${x[2]}${x[3] ? '-' + x[3] : ''}`;
+    });
+}
